@@ -1,16 +1,20 @@
 package com.example.administrator.examsystem;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -28,6 +32,17 @@ public class MainActivity extends AppCompatActivity {
         setting.setDefaultTextEncodingName("GBK");//设置字符编码
         webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);//滚动条风格，为0指滚动条不占用空间，直接覆盖在网页上
 
-        webview.loadUrl("http://42.200.39.108/admin");
+        webview.loadUrl("http://42.200.39.108/");
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCoder,KeyEvent event){
+        WebView webview = (WebView) findViewById(R.id.webView_Main);
+        if(webview.canGoBack() && keyCoder == KeyEvent.KEYCODE_BACK){
+            webview.goBack();   //goBack()表示返回webView的上一页面
+
+            return true;
+        }
+        return false;
     }
 }
